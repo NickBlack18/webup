@@ -1,71 +1,40 @@
-#utils {
-  .borderRadius(@radius: 5px) when (isnumber(@radius)) {
-     border-radius: @radius;
-     -moz-border-radius: @radius;
-     -webkit-border-radius: @radius;
-  }
-
-  .borderRadius(@_) {
-     border-radius: 15px + 15;
-     -moz-border-radius: 15px + 15;
-     -webkit-border-radius: 15px + 15;
-  }
-}
-
-#special {
-    .borderRadius(@radius: 90px) {
-         border-radius: @radius;
-         -moz-border-radius: @radius;
-         -webkit-border-radius: @radius;
-      }
-}
-
 @bgColor: #444;
+@color: #fff;
 
-.baseClass {
-   width: 100px;
-   height: 100px;
-   text-align: center;
-   #special > .borderRadius();
+.borderRadius(@value: 5px) {
+   border-radius: @value;
+   -moz-border-radius: @value;
+   -webkit-border-radius: @value;
 }
 
-.variable {
-   .baseClass;
-   background-color:@bgColor;
-   &:hover {
-      background-color: lighten(@bgColor, 30%);
-   }
+.base {
+    .borderRadius();
+  background-color: lighten(@bgColor, 10%);
+    color: @color;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin: 20px;
 }
 
-.scope {
-   @bgColor: #ff0000;
-   .baseClass;
-   background-color: @bgColor / 3;
+#header {
+  .base;
 }
 
-.mixin {
-   .baseClass;
-   #utils > .borderRadius(15px);
-   background-color: #000;
-   color: #fff;
+#footer {
+  .base;
+  .borderRadius(15px);
 }
 
-.container {
-   background-color: @bgColor;
-   color: white;
-
-   .section {
-     background-color: lighten(@bgColor, 20%);
-     padding: 5px;
-   }
-
-   .element {
-       &:hover {
-             background-color: #ff0000;
-       }
-
-       .item {
-          color: blue;
-       }
+.parent {
+  .base;
+  .inner {
+    font-weight: bold;
+    .child {
+      text-decoration: underline;
+      &:hover {
+         background-color: red;
+      }
     }
+  }
 }
